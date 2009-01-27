@@ -1,0 +1,4 @@
+useDynLib(mmcm)
+export(mmcm.resamp)
+S3method(print, mmcm.resamp)
+
