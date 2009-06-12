@@ -50,9 +50,9 @@
 // return value   *pval        - resampling P-Value (count)
 //                             - p[contr_dim]
 //**********************************************************************************/
-void mmcm_rwrap(double *param, int *clsrnd, double *ctr_mat, long *resamp_size,
-    long *seed, int *class_dim, int *contr_dim, int *sample_size,
-    long *pval) {
+void mmcm_rwrap(double *param, int *clsrnd, double *ctr_mat, int *resamp_size,
+    int *seed, int *class_dim, int *contr_dim, int *sample_size,
+    int *pval) {
 
   int i;
   struct mmcmdat *rdat;
@@ -101,8 +101,8 @@ void mmcm_rwrap(double *param, int *clsrnd, double *ctr_mat, long *resamp_size,
 //                             - p[contr_dim]
 // error code      always 0 yet, this version
 //**********************************************************************************/
-int stat_resamp(struct mmcmdat *rdat, double *ctr_mat, long resamp_size,
-    long seed, int class_dim, int contr_dim, int sample_size, long *pval) {
+ int stat_resamp(struct mmcmdat *rdat, double *ctr_mat, long resamp_size,
+    long seed, int class_dim, int contr_dim, int sample_size, int *pval) {
 
   int i, class_max = -1;
   long j, *class_size;

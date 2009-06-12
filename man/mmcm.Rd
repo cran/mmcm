@@ -26,7 +26,7 @@ Maintainer: Kengo NAGASHIMA \email{nagasima@josai.ac.jp}
 \references{
 Sato, Y., Laird, N.M., Nagashima, K., et al. (2009)
 A new statistical screening approach for finding pharmacokinetics-related genes in genome-wide studies.
-\emph{Pharmacogenomics J.}, in press.
+\emph{Pharmacogenomics J.} \bold{9}(2): 137--146.
 \url{http://www.ncbi.nlm.nih.gov/pubmed/19104505}
 }
 \keyword{htest}
