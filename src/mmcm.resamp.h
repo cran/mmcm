@@ -13,21 +13,13 @@ struct mmcmdat {
 
 void init_gen_rand(uint32_t);
 uint32_t gen_rand32(void);
+ 
+void mmcm_rwrap(double *, int *, double *, int *, int *, int *, int *, int *, int *);
 
-void mmcm_rwrap(double *, int *, double *, long *, long *, int *, int *, int *, long *);
-
-int stat_resamp(struct mmcmdat *, double *, long, long, int, int, int, long *);
+int stat_resamp(struct mmcmdat *, double *, long, long, int, int, int, int *);
 int mean_get(struct mmcmdat *, int, int, int, long *, double, double *);
 int rmean_get(struct mmcmdat *, int, int, int, long *, double, double *);
 int gsize_chk(struct mmcmdat *, int, int, int *, long *, double *);
 int stat_calc(double *, double *, double *, int, int, double *);
 int stat_denom(double *, int, int, double *);
 int clsrnd_cmp(const void *_p0, const void *_p1);
-int stat_resamp(struct mmcmdat *, double *, long, long, int, int, int, long *);
-int mean_get(struct mmcmdat *, int, int, int, long *, double, double *);
-int rmean_get(struct mmcmdat *, int, int, int, long *, double, double *);
-int gsize_chk(struct mmcmdat *, int, int, int *, long *, double *);
-int stat_calc(double *, double *, double *, int, int, double *);
-int stat_denom(double *, int, int, double *);
-int clsrnd_cmp(const void *_p0, const void *_p1);
-
