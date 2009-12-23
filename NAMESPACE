@@ -1,4 +1,6 @@
 useDynLib(mmcm)
 export(mmcm.resamp)
-S3method(print, mmcm.resamp)
+export(mmcm.mvt)
+export(mcm.mvt)
+S3method(print, mmcm.res)
 

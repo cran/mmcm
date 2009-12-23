@@ -1,4 +1,4 @@
-`print.mmcm.resamp` <-
+`print.mmcm.res` <-
 function(x, ...) {
   ####################
   # print result
@@ -15,7 +15,7 @@ function(x, ...) {
     )
   } else {
     cat(
-      sprintf("\n\tModified maximum contrast method\n\n"),
+      sprintf("\n\t%s\n\n", x$method),
       sprintf("observed statistics = %.3f\n", x$astat[x$cont]),
       sprintf("contrast = %d\t(", x$cont),
       sprintf("%s ", x$acont[,x$cont]),
