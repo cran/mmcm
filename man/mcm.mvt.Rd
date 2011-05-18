@@ -4,20 +4,20 @@
   The maximum contrast method by using the quasi-Monte Carlo method
 }
 \description{
-  This function gives \eqn{P}-value for the maximum contrast statistics by using the quasi-Monte Carlo method from \code{\link[mvtnorm:pmvt]{pmvt}} function of package \code{mvtnorm}.
+  This function gives \eqn{P}-value for the maximum contrast statistics by using randomized quasi-Monte Carlo method from \code{\link[mvtnorm:pmvt]{pmvt}} function of package \code{mvtnorm}.
 }
 \usage{
 mcm.mvt(
-  x, g, contrast,
-  algorithm = GenzBretz()
+  x, g, contrast, alternative = c("two.sided", "less", "greater"), algorithm = GenzBretz()
 )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{a numeric vector of data values}
   \item{g}{a integer vector giving the group for the corresponding elements of x}
-  \item{contrast}{a numeric coefficient matrix for the maximum contrast statistics}
-  \item{algorithm}{an object of class '\code{\link[mvtnorm:GenzBretz]{GenzBretz}}' defining the hyper parameters of this algorithm}
+  \item{contrast}{a numeric contrast coefficient matrix for the maximum contrast statistics}
+  \item{alternative}{a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.}
+  \item{algorithm}{an object of class \code{\link[mvtnorm:algorithms]{GenzBretz}} defining the hyper parameters of this algorithm}
 }
 \details{
   \code{\link{mcm.mvt}} performs the maximum contrast method that is detecting a true response pattern.
@@ -73,22 +73,20 @@ mcm.mvt(
     P-value = Pr(T_max > t*_max | H0)
   }
   \eqn{t^{*}_{\max}}{t*_max} is observed value of statistics.
-  This function gives distribution of \eqn{T_{\max}}{T_max} by using the quasi-Monte Carlo method from package \code{mvtnorm}.
+  This function gives distribution of \eqn{T_{\max}}{T_max} by using randomized quasi-Monte Carlo method from package \code{mvtnorm}.
 }
 \value{
-  \item{cont}{
-    suffix of coefficient vector of \eqn{k}th pattern that gives maximum contrast statistics (colmun number of coefficient matrix).
+  A list with class "mmcm" containing the following components:
+  \item{statistic}{the value of the test statistic with a name describing it.}
+  \item{p.value}{the p-value for the test.}
+  \item{alternative}{a character string describing the alternative hypothesis.}
+  \item{method}{the type of test applied.}
+  \item{contrast}{a character string giving the names of the data.}
+  \item{contrast.index}{
+    a suffix of coefficient vector of the \eqn{k}th pattern that gives maximum contrast statistics (row number of the coefficient matrix).
   }
-  \item{pval}{
-    \eqn{P}-value of the maximum contrast statistics, which is simulated by using the quasi-Monte Carlo method.
-  }
-  \item{astat}{
-    vector of observed values (\eqn{T_k}{T_k}) for each the contrast statistics.
-  }
-  \item{acont}{
-    coefficient matrix (copy of argument).
-  }
-  return value is \code{mmcm.res} class object.
+  \item{error}{estimated absolute error and,}
+  \item{msg}{status messages.}
 }
 %\note{
 % x list version
@@ -106,17 +104,17 @@ Maintainer: Kengo NAGASHIMA \email{nagasima@josai.ac.jp}
 }
 \seealso{
   \code{\link[mvtnorm:pmvt]{pmvt}},
-  \code{\link[mvtnorm:GenzBretz]{GenzBretz}},
+  \code{\link[mvtnorm:algorithms]{GenzBretz}},
   \code{\link{mmcm.mvt}}
 }
 \examples{
 ## Example 1 ##
 #  true response pattern: dominant model c=(1, 1, -2)
-set.seed(326584)
+set.seed(136885)
 x <- c(
-  rlnorm(130, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 90, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 10, meanlog = 0.85, sdlog = 0.25)
+  rnorm(130, mean =  1 / 6, sd = 1),
+  rnorm( 90, mean =  1 / 6, sd = 1),
+  rnorm( 10, mean = -2 / 6, sd = 1)
 )
 g <- rep(1:3, c(130, 90, 10))
 boxplot(
@@ -140,17 +138,17 @@ y
 #  true response pattern: pos = 1 dominant  model c=( 1,  1, -2)
 #                               2 additive  model c=(-1,  0,  1)
 #                               3 recessive model c=( 2, -1, -1)
-set.seed(8415849)
+set.seed(3872435)
 x   <- c(
-  rlnorm(130, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 90, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 10, meanlog = 0.85, sdlog = 0.25),
-  rlnorm(130, meanlog = 0.79, sdlog = 0.1),
-  rlnorm( 90, meanlog = 0.85, sdlog = 0.1),
-  rlnorm( 10, meanlog = 0.91, sdlog = 0.25),
-  rlnorm(130, meanlog = 0.85, sdlog = 0.1),
-  rlnorm( 90, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 10, meanlog = 0.91, sdlog = 0.25)
+  rnorm(130, mean =  1 / 6, sd = 1),
+  rnorm( 90, mean =  1 / 6, sd = 1),
+  rnorm( 10, mean = -2 / 6, sd = 1),
+  rnorm(130, mean = -1 / 4, sd = 1),
+  rnorm( 90, mean =  0 / 4, sd = 1),
+  rnorm( 10, mean =  1 / 4, sd = 1),
+  rnorm(130, mean =  2 / 6, sd = 1),
+  rnorm( 90, mean = -1 / 6, sd = 1),
+  rnorm( 10, mean = -1 / 6, sd = 1)
 )
 g   <- rep(rep(1:3, c(130, 90, 10)), 3)
 pos <- rep(c("rsXXXX", "rsYYYY", "rsZZZZ"), each=230)
@@ -171,7 +169,8 @@ y <- tapply(xx$pos, xx$pos, mmcmtapply)
 yy <- data.frame(
   Pos = as.vector(names(y)),
   Pval = as.vector(sapply(y, "[[", 3)),
-  Pattern = as.vector(sapply(y, "[[", 4))
+  Pattern = as.vector(sapply(y, "[[", 7)),
+  QMC_Error = as.vector(sapply(y, "[[", 9))
 )
 # miss-detection!
 yy
