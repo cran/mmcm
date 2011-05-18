@@ -1,33 +1,32 @@
 \name{mmcm.resamp}
 \alias{mmcm.resamp}
 \title{
-  A modified maximum contrast method by using the permutation method
+  The permutated modified maximum contrast method
 }
 \description{
-  This function gives \eqn{P}-value for modified maximum contrast statistics by using the permutation method.
+  This function gives \eqn{P}-value for the permutated modified maximum contrast method.
 }
 \usage{
 mmcm.resamp(
-  x, g, contrast,
-  nsample = 20000, seed = unclass(Sys.time())
+  x, g, contrast, alternative = c("two.sided", "less", "greater"), nsample = 20000, abseps = 0.001, seed = unclass(Sys.time())
 )
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{a numeric vector of data values}
   \item{g}{a integer vector giving the group for the corresponding elements of x}
-  \item{contrast}{a numeric coefficient matrix for modified maximum contrast statistics}
+  \item{contrast}{a numeric contrast coefficient matrix for permutated modified maximum contrast statistics}
+  \item{alternative}{a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.}
   \item{nsample}{specifies the number of resamples (defalt: 20,000)}
-  \item{seed}{a 32-bit integer (\eqn{-2^{31}+1\leq \mbox{seed} \leq 2^{31}-1}{-2^31+1 <= seed <= 2^31-1})
-    used as the seed for the pseudo-random number generator
-    used for the permutation method (default: time-dependent integer)}
+  \item{abseps}{specifies the absolute error tolerance (defalt: 1e-3)}
+  \item{seed}{a 32-bit integer (\eqn{-2^{31}+1\leq \mbox{seed} \leq 2^{31}-1}{-2^31+1 <= seed <= 2^31-1}) used as the seed for the pseudo-random number generator used for the permutation method (default: time-dependent integer)}
 }
 \details{
-  \code{\link{mmcm.resamp}} performs a modified maximum contrast method that is detecting a true response pattern under the unequal sample size situation.
+  \code{\link{mmcm.resamp}} performs the permutated maximum contrast method that is detecting a true response pattern under the unequal sample size situation.
 
   \eqn{Y_{ij} (i=1,~ 2,~\ldots ;~ j=1,~ 2,~ \ldots,~ n_i)}{Y_ij (i = 1, 2, ...; j = 1, 2, ..., n_i)} is an observed response for \eqn{j}th individual in \eqn{i}th group.
 
-  \eqn{\bm{C}}{C} is coefficient matrix for modified maximum contrast statistics (\eqn{i \times k}{i x k} matrix, \eqn{i}: No. of groups, \eqn{k}: No. of pattern).
+  \eqn{\bm{C}}{C} is coefficient matrix for permutated modified maximum contrast statistics (\eqn{i \times k}{i x k} matrix, \eqn{i}: No. of groups, \eqn{k}: No. of pattern).
   \deqn{
     \bm{C}=(\bm{c}_1~ \bm{c}_2~ \ldots~ \bm{c}_k)^t
   }{
@@ -40,7 +39,7 @@ mmcm.resamp(
     c_k = (c_k1 c_k2 ... c_ki)^t (sum from i of c_ki = 0)
   }
   
-  \eqn{T^{\prime\prime}_{\max}}{T''_max} is a modified maximum contrast statistic.
+  \eqn{T^{\prime\prime}_{\max}}{T''_max} is a permutated modified maximum contrast statistic.
   \deqn{
     \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}}, ~~
     \bar{\bm{Y}}=(\bar{Y}_1~ \bar{Y}_2~ \ldots~ \bar{Y}_i \ldots~ \bar{Y}_a)^t,
@@ -64,30 +63,32 @@ mmcm.resamp(
     P-value = Pr(T''_max > t''*_max | H0)
   }
   \eqn{t^{\prime\prime*}_{\max}}{t''*_max} is observed value of statistics.
-  This function gives distribution of \eqn{T^{\prime\prime}_{\max}}{T''_max} by using the permutation method.
+  This function gives distribution of \eqn{T^{\prime\prime}_{\max}}{T''_max} by using the permutation method, follow algorithm:
+
+  1. Initialize counting variable: \eqn{COUNT = 0}{COUNT = 0}. Input parameters: \eqn{NRESAMPMIN}{NRESAMPMIN} (minimum resampling count, we set 1000), \eqn{NRESAMPMAX}{NRESAMPMAX} (maximum resampling count), and \eqn{\epsilon}{epsilon} (absolute error tolerance).
+
+  2. Calculate \eqn{t^{\prime\prime*}_{\max}}{t''*_max} that is the observed value of the test statistic.
+
+  3. Let \eqn{y_{ij}^{(r)}}{y_ij(r)} donate data, which are sampled without replacement, and independently, form observed value \eqn{y_{ij}}{y_ij}. Where, \eqn{(r)}{(r)} is suffix of the resampling number \eqn{(r = 1,\, 2,\, \ldots)}{(r = 1, 2, ...)}.
+
+  4. Calculate \eqn{t^{\prime\prime*(r)}_{\max}}{t''*(r)_max} from \eqn{y_{ij}^{(r)}}{y_ij(r)}. If \eqn{t^{\prime\prime*(r)}_{\max} > t^{\prime\prime*}_{\max}}{t''*(r)_max > t''*_max}, then increment the counting variable: \eqn{COUNT = COUNT + 1}{COUNT = COUNT + 1}. Calculate approximate P-value \eqn{\hat{p}^{(r)}=COUNT/r}{hat-p(r) = COUNT / r}, and the simulation standard error \eqn{SE(\hat{p}^{(r)})=\sqrt{\hat{p}^{(r)}(1-\hat{p}^{(r)})/r}}{[hat-p(r) (1 - hat-p(r)) / r]^(1/2)}.
+
+  5. Repeat 3--4, while \eqn{r > 1000}{r > 1000} and \eqn{3.5SE(\hat{p}^{(r)}) < \epsilon}{3.5 SE(hat-p(r)) < epsilon} (corresponding to 99\% confidence level), or \eqn{NRESAMPMAX}{NRESAMPMAX} times. Output the approximate P-value \eqn{\hat{p}^{(r)}}{hat-p(r)}.
+
 }
 \value{
-  \item{cont}{
-    suffix of coefficient vector of \eqn{k}th pattern that gives maximum contrast statistics (colmun number of coefficient matrix).
+  A list with class "mmcm" containing the following components:
+  \item{statistic}{the value of the test statistic with a name describing it.}
+  \item{p.value}{the p-value for the test.}
+  \item{alternative}{a character string describing the alternative hypothesis.}
+  \item{method}{the type of test applied.}
+  \item{contrast}{a character string giving the names of the data.}
+  \item{contrast.index}{
+    a suffix of coefficient vector of the \eqn{k}th pattern that gives permuted modified maximum contrast statistics (row number of the coefficient matrix).
   }
-  \item{pval}{
-    \eqn{P}-value of modified maximum contrast statistics, which is simulated by using the permutation method.
-  }
-  \item{apval}{
-    vector of \eqn{P}-values (\eqn{\Pr(T^{\prime\prime}_k>t^{\prime\prime*}_k \mid H_0)}{Pr(T''_max > t''*_max | H0}) for each modified contrast statistics.
-  }
-  \item{astat}{
-    vector of observed values (\eqn{T^{\prime\prime}_k}{T''_k}) for each modified contrast statistics.
-  }
-  \item{acont}{
-    coefficient matrix (copy of argument).
-  }
-  return value is \code{mmcm.res} class object.
+  \item{error}{estimated absolute error and,}
+  \item{msg}{status messages.}
 }
-%\note{
-% x list version
-% g factor object version
-%}
 \references{
 Sato, Y., Laird, N.M., Nagashima, K., et al. (2009)
 A new statistical screening approach for finding pharmacokinetics-related genes in genome-wide studies.
@@ -105,11 +106,11 @@ Maintainer: Kengo NAGASHIMA \email{nagasima@josai.ac.jp}
 \examples{
 ## Example 1 ##
 #  true response pattern: dominant model c=(1, 1, -2)
-set.seed(326584)
+set.seed(136885)
 x <- c(
-  rlnorm(130, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 90, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 10, meanlog = 0.85, sdlog = 0.25)
+  rnorm(130, mean =  1 / 6, sd = 1),
+  rnorm( 90, mean =  1 / 6, sd = 1),
+  rnorm( 10, mean = -2 / 6, sd = 1)
 )
 g <- rep(1:3, c(130, 90, 10))
 boxplot(
@@ -125,7 +126,7 @@ boxplot(
 contrast <- rbind(
   c(-1, 0, 1), c(-2, 1, 1), c(-1, -1, 2)
 )
-y <- mmcm.resamp(x, g, contrast, 20000, 5784324)
+y <- mmcm.resamp(x, g, contrast, nsample = 20000, abseps = 0.01, seed = 5784324)
 y
 
 ## Example 2 ##
@@ -133,17 +134,17 @@ y
 #  true response pattern: pos = 1 dominant  model c=( 1,  1, -2)
 #                               2 additive  model c=(-1,  0,  1)
 #                               3 recessive model c=( 2, -1, -1)
-set.seed(8415849)
+set.seed(3872435)
 x   <- c(
-  rlnorm(130, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 90, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 10, meanlog = 0.85, sdlog = 0.25),
-  rlnorm(130, meanlog = 0.79, sdlog = 0.1),
-  rlnorm( 90, meanlog = 0.85, sdlog = 0.1),
-  rlnorm( 10, meanlog = 0.91, sdlog = 0.25),
-  rlnorm(130, meanlog = 0.85, sdlog = 0.1),
-  rlnorm( 90, meanlog = 0.91, sdlog = 0.1),
-  rlnorm( 10, meanlog = 0.91, sdlog = 0.25)
+  rnorm(130, mean =  1 / 6, sd = 1),
+  rnorm( 90, mean =  1 / 6, sd = 1),
+  rnorm( 10, mean = -2 / 6, sd = 1),
+  rnorm(130, mean = -1 / 4, sd = 1),
+  rnorm( 90, mean =  0 / 4, sd = 1),
+  rnorm( 10, mean =  1 / 4, sd = 1),
+  rnorm(130, mean =  2 / 6, sd = 1),
+  rnorm( 90, mean = -1 / 6, sd = 1),
+  rnorm( 10, mean = -1 / 6, sd = 1)
 )
 g   <- rep(rep(1:3, c(130, 90, 10)), 3)
 pos <- rep(c("rsXXXX", "rsYYYY", "rsZZZZ"), each=230)
@@ -155,26 +156,18 @@ contrast <- rbind(
   c(-1, 0, 1), c(-2, 1, 1), c(-1, -1, 2)
 )
 
-
-#y <- apply(xx, 2,
-#  function(xx, g, contrast, nsample) {
-#    mmcm.resamp(cx, g, contrast, nsample)
-#  },
-#  g, contrast, 10000
-#)
-
-
 mmcmtapply <- function(r) {
   mmcm.resamp(
     xx$x[xx$pos==r[1]], xx$g[xx$pos==r[1]],
-    contrast, 10000, 5784324+as.numeric(r[1])
+    contrast, nsample = 10000, abseps = 0.01, seed = 5784324+as.numeric(r[1])
   )
 }
 y <- tapply(xx$pos, xx$pos, mmcmtapply)
 yy <- data.frame(
   Pos = as.vector(names(y)),
-  Pval = as.vector(sapply(y, "[[", 5)),
-  Pattern = as.vector(sapply(y, "[[", 6))
+  Pval = as.vector(sapply(y, "[[", 3)),
+  Pattern = as.vector(sapply(y, "[[", 7)),
+  MC_Error = as.vector(sapply(y, "[[", 9))
 )
 yy
 }
