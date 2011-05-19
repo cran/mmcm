@@ -101,13 +101,12 @@ void mmcm_rwrap(double *param, double *clsrnd, double *ctr_mat, int *resamp_size
   int i, class_max = -1;
   int nmin = 1000;
   long j, *class_size, k = 0, pcount = 0;
-  double all_sum = 0.0, *ctr_denom, *class_mean, *t_d, *rt_d, er = 1.0e+10, pv = 0.0;
+  double all_sum = 0.0, *class_mean, *ctr_denom, *t_d, er = 1.0e+10, pv = 0.0;
 
   class_size = my_malloc_long1(class_dim);
   class_mean = my_malloc_double1(class_dim);
   ctr_denom  = my_malloc_double1(contr_dim);
   t_d        = my_malloc_double1(contr_dim);
-  rt_d       = my_malloc_double1(contr_dim);
 
   // calculate denominator of modified contrast statistics
   stat_denom(ctr_mat, class_dim, contr_dim, ctr_denom);
@@ -149,7 +148,6 @@ void mmcm_rwrap(double *param, double *clsrnd, double *ctr_mat, int *resamp_size
   struct mmcmdat **MP_rdat;
   int th_id, nthread;
   double **MP_class_mean, **MP_rt_d, **MP_randseq;
-  double checker[2] = {0, 0};
 
   #pragma omp parallel shared(k,pv,er,pcount,MP_rdat,MP_randseq,MP_class_mean,MP_rt_d,nthread) firstprivate(nmin,abseps,sample_size,class_dim,class_max,class_size,all_sum,ctr_mat,ctr_denom,contr_dim) private(i,j,th_id)
   {
@@ -179,18 +177,16 @@ void mmcm_rwrap(double *param, double *clsrnd, double *ctr_mat, int *resamp_size
       }
     }
 
-    #pragma omp for schedule(guided,10)
+    #pragma omp for schedule(guided)
     for (j = 0; j < resamp_size; j++) {
 
       th_id = omp_get_thread_num();
-      checker[th_id] = 0;
 
       if (k > nmin && er < abseps) continue;
 
       // generate psude-random number
       for (i = 0; i < sample_size; i++) {
         MP_rdat[th_id][i].clsrnd = MP_randseq[j][i];
-        checker[th_id] += MP_rdat[th_id][i].clsrnd;
       }
 
       // calculate modified contrast statistics (resampling)
@@ -264,6 +260,10 @@ void mmcm_rwrap(double *param, double *clsrnd, double *ctr_mat, int *resamp_size
   }
 
   #else
+
+  double *rt_d;
+
+  rt_d       = my_malloc_double1(contr_dim);
 
   GetRNGstate();
   for (j = 0; j < resamp_size; j++) {

@@ -3,6 +3,10 @@ ToDo
 
 Change log
 
+ 2011-05-16: version 1.2-1
+   bug fix for a multi-core CPU
+   revise help files
+
  2011-05-16: version 1.2-0
    OpenMP parallelization for "mmcm.resamp" function
    Support one and two-sided tests
