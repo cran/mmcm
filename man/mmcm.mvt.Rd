@@ -8,7 +8,8 @@
 }
 \usage{
 mmcm.mvt(
-  x, g, contrast, alternative = c("two.sided", "less", "greater"), algorithm = GenzBretz()
+  x, g, contrast, alternative = c("two.sided", "less", "greater"),
+  algorithm = GenzBretz()
 )
 }
 %- maybe also 'usage' for other objects documented here.
@@ -37,7 +38,7 @@ mmcm.mvt(
     c_k = (c_k1 c_k2 ... c_ki)^t (sum from i of c_ki = 0)
   }
   
-  \eqn{T^{\prime}_{\max}}{T'_max} is a studentized modified maximum contrast statistic.
+  \eqn{S_{\max}}{S_max} is a studentized modified maximum contrast statistic.
   \deqn{
     \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}}, ~~
     \bar{\bm{Y}}=(\bar{Y}_1~ \bar{Y}_2~ \ldots~ \bar{Y}_i \ldots~ \bar{Y}_a)^t,
@@ -46,31 +47,31 @@ mmcm.mvt(
     Ybar = (Ybar_1 Ybar_2 ... Ybar_i ... Ybar_a)^t (a x 1 vector),
   }
   \deqn{
-    S^2=\frac{1}{\gamma}\sum_{j=1}^{n_i}\sum_{i=1}^{a} (Y_{ij}-\bar{Y}_i)^2,~~
+    V=\frac{1}{\gamma}\sum_{j=1}^{n_i}\sum_{i=1}^{a} (Y_{ij}-\bar{Y}_i)^2,~~
     \gamma=\sum_{i=1}^{a} (n_i-1),
   }{
-    S^2 = 1/gamma * sum_{j=1}^{n_i} sum_{i=1}^{a} (Y_ij-Ybar_i)^2,
+    V = 1/gamma * sum_{j=1}^{n_i} sum_{i=1}^{a} (Y_ij-Ybar_i)^2,
     gamma = sum_{i=1}^{a} (n_i-1),
   }
   \deqn{
-    T^{\prime}_{k}=\frac{\bm{c}^t_k \bar{\bm{Y}}}{\sqrt{S^2 \bm{c}^t_k \bm{c}_k}},
+    S_{k}=\frac{\bm{c}^t_k \bar{\bm{Y}}}{\sqrt{V \bm{c}^t_k \bm{c}_k}},
   }{
-    T'_k = c_k^t Ybar / (S^2 c_k^t c_k)^(1/2),
+    S_k = c_k^t Ybar / (V c_k^t c_k)^(1/2),
   }
   \deqn{
-    T^{\prime}_{\max}=\max(T^{\prime}_1,~ T^{\prime}_2,~ \ldots,~ T^{\prime}_k).
+    S_{\max}=\max(S_1,~ S_2,~ \ldots,~ S_k).
   }{
-    T'_max = max(T'_1, T'_2, ..., T'_k).
+    S_max = max(S_1, S_2, ..., S_k).
   }
   
-  Consider testing the overall null hypothesis \eqn{H_0: \mu_1=\mu_2=\ldots=\mu_i}, versus alternative hypotheses \eqn{H_1} for response petterns  (\eqn{H_1: \mu_1<\mu_2<\ldots<\mu_i,~ \mu_1=\mu_2<\ldots<\mu_i,~ \mu_1<\mu_2<\ldots=\mu_i}). The \eqn{P}-value for the probability distribution of \eqn{T^{\prime}_{\max}}{T'_max} under the overall null hypothesis is
+  Consider testing the overall null hypothesis \eqn{H_0: \mu_1=\mu_2=\ldots=\mu_i}, versus alternative hypotheses \eqn{H_1} for response petterns  (\eqn{H_1: \mu_1<\mu_2<\ldots<\mu_i,~ \mu_1=\mu_2<\ldots<\mu_i,~ \mu_1<\mu_2<\ldots=\mu_i}). The \eqn{P}-value for the probability distribution of \eqn{S_{\max}}{S_max} under the overall null hypothesis is
   \deqn{
-    P\mbox{-value}=\Pr(T^{\prime}_{\max}>t^{\prime*}_{\max} \mid H_0)
+    P\mbox{-value}=\Pr(S_{\max}>s_{\max} \mid H_0)
   }{
-    P-value = Pr(T'_max > t'*_max | H0)
+    P-value = Pr(S_max > s_max | H0)
   }
-  \eqn{t^{\prime*}_{\max}}{t'*_max} is observed value of statistics.
-  This function gives distribution of \eqn{T^{\prime}_{\max}}{T'_max} by using randomized quasi-Monte Carlo method from package \code{mvtnorm}.
+  \eqn{s_{\max}}{s_max} is observed value of statistics.
+  This function gives distribution of \eqn{S_{\max}}{S_max} by using randomized quasi-Monte Carlo method from package \code{mvtnorm}.
 }
 \value{
   A list with class "mmcm" containing the following components:

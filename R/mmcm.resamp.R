@@ -1,6 +1,6 @@
 `mmcm.resamp` <-
 function(x, g, contrast, alternative = c("two.sided", "less", "greater"),
-  nsample=20000, abseps=0.001, seed=unclass(Sys.time())) {
+  nsample=20000, abseps=0.001, seed=NULL) {
   
   ####################
   # executable check
@@ -78,13 +78,15 @@ function(x, g, contrast, alternative = c("two.sided", "less", "greater"),
   IMAXCONT <- (1:m)[STATISTICS==STATISTIC]
   NMAXCONT <- contrast[IMAXCONT,]
   
-  set.seed(seed)
   nalternative <- switch(
     alternative,
     less      = 1,
     greater   = 2,
     two.sided = 3
   )
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
   RESAMP <- .C(
     "mmcm_rwrap",
     as.double(x),

@@ -8,7 +8,8 @@
 }
 \usage{
 mmcm.resamp(
-  x, g, contrast, alternative = c("two.sided", "less", "greater"), nsample = 20000, abseps = 0.001, seed = unclass(Sys.time())
+  x, g, contrast, alternative = c("two.sided", "less", "greater"),
+  nsample = 20000, abseps = 0.001, seed = NULL
 )
 }
 %- maybe also 'usage' for other objects documented here.
@@ -17,9 +18,9 @@ mmcm.resamp(
   \item{g}{a integer vector giving the group for the corresponding elements of x}
   \item{contrast}{a numeric contrast coefficient matrix for permutated modified maximum contrast statistics}
   \item{alternative}{a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less". You can specify just the initial letter.}
-  \item{nsample}{specifies the number of resamples (defalt: 20,000)}
-  \item{abseps}{specifies the absolute error tolerance (defalt: 1e-3)}
-  \item{seed}{a 32-bit integer (\eqn{-2^{31}+1\leq \mbox{seed} \leq 2^{31}-1}{-2^31+1 <= seed <= 2^31-1}) used as the seed for the pseudo-random number generator used for the permutation method (default: time-dependent integer)}
+  \item{nsample}{specifies the number of resamples (default: 20000)}
+  \item{abseps}{specifies the absolute error tolerance (default: 0.001)}
+  \item{seed}{a single value, interpreted as an integer; see \link[base:Random]{set.seed()} function. (default: NULL)}
 }
 \details{
   \code{\link{mmcm.resamp}} performs the permutated maximum contrast method that is detecting a true response pattern under the unequal sample size situation.
@@ -39,39 +40,39 @@ mmcm.resamp(
     c_k = (c_k1 c_k2 ... c_ki)^t (sum from i of c_ki = 0)
   }
   
-  \eqn{T^{\prime\prime}_{\max}}{T''_max} is a permutated modified maximum contrast statistic.
+  \eqn{M_{\max}}{M_max} is a permutated modified maximum contrast statistic.
   \deqn{
     \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}}, ~~
     \bar{\bm{Y}}=(\bar{Y}_1~ \bar{Y}_2~ \ldots~ \bar{Y}_i \ldots~ \bar{Y}_a)^t,
-    T^{\prime\prime}_{k}=\frac{\bm{c}^t_k \bar{\bm{Y}}}{\sqrt{\bm{c}^t_k \bm{c}_k}},
+    M_{k}=\frac{\bm{c}^t_k \bar{\bm{Y}}}{\sqrt{\bm{c}^t_k \bm{c}_k}},
   }{
     Ybar_i = (sum from j of Y_ij) / n_i,
     Ybar = (Ybar_1 Ybar_2 ... Ybar_i ... Ybar_a)^t (a x 1 vector),
-    T''_k = c_k^t Ybar / (c_k^t c_k)^(1/2),
+    M_k = c_k^t Ybar / (c_k^t c_k)^(1/2),
   }
   \deqn{
-    T^{\prime\prime}_{\max}=\max(T^{\prime\prime}_1,~ T^{\prime\prime}_2,~ \ldots,~ T^{\prime\prime}_k).
+    M_{\max}=\max(M_1,~ M_2,~ \ldots,~ M_k).
   }{
-    T''_max = max(T''_1, T''_2, ..., T''_k).
+    M_max = max(M_1, M_2, ..., M_k).
   }
   
   Consider testing the overall null hypothesis \eqn{H_0: \mu_1=\mu_2=\ldots=\mu_i}, versus alternative hypotheses \eqn{H_1} for response petterns  (\eqn{H_1: \mu_1<\mu_2<\ldots<\mu_i,~ \mu_1=\mu_2<\ldots<\mu_i,~ \mu_1<\mu_2<\ldots=\mu_i}).
-  The \eqn{P}-value for the probability distribution of \eqn{T^{\prime\prime}_{\max}}{T''_max} under the overall null hypothesis is
+  The \eqn{P}-value for the probability distribution of \eqn{M_{\max}}{M_max} under the overall null hypothesis is
   \deqn{
-    P\mbox{-value}=\Pr(T^{\prime\prime}_{\max}>t^{\prime\prime*}_{\max} \mid H_0)
+    P\mbox{-value}=\Pr(M_{\max}>m_{\max} \mid H_0)
   }{
-    P-value = Pr(T''_max > t''*_max | H0)
+    P-value = Pr(M_max > m_max | H0)
   }
-  \eqn{t^{\prime\prime*}_{\max}}{t''*_max} is observed value of statistics.
-  This function gives distribution of \eqn{T^{\prime\prime}_{\max}}{T''_max} by using the permutation method, follow algorithm:
+  \eqn{m_{\max}}{m_max} is observed value of statistics.
+  This function gives distribution of \eqn{M_{\max}}{M_max} by using the permutation method, follow algorithm:
 
   1. Initialize counting variable: \eqn{COUNT = 0}{COUNT = 0}. Input parameters: \eqn{NRESAMPMIN}{NRESAMPMIN} (minimum resampling count, we set 1000), \eqn{NRESAMPMAX}{NRESAMPMAX} (maximum resampling count), and \eqn{\epsilon}{epsilon} (absolute error tolerance).
 
-  2. Calculate \eqn{t^{\prime\prime*}_{\max}}{t''*_max} that is the observed value of the test statistic.
+  2. Calculate \eqn{m_{\max}}{m_max} that is the observed value of the test statistic.
 
   3. Let \eqn{y_{ij}^{(r)}}{y_ij(r)} donate data, which are sampled without replacement, and independently, form observed value \eqn{y_{ij}}{y_ij}. Where, \eqn{(r)}{(r)} is suffix of the resampling number \eqn{(r = 1,\, 2,\, \ldots)}{(r = 1, 2, ...)}.
 
-  4. Calculate \eqn{t^{\prime\prime*(r)}_{\max}}{t''*(r)_max} from \eqn{y_{ij}^{(r)}}{y_ij(r)}. If \eqn{t^{\prime\prime*(r)}_{\max} > t^{\prime\prime*}_{\max}}{t''*(r)_max > t''*_max}, then increment the counting variable: \eqn{COUNT = COUNT + 1}{COUNT = COUNT + 1}. Calculate approximate P-value \eqn{\hat{p}^{(r)}=COUNT/r}{hat-p(r) = COUNT / r}, and the simulation standard error \eqn{SE(\hat{p}^{(r)})=\sqrt{\hat{p}^{(r)}(1-\hat{p}^{(r)})/r}}{[hat-p(r) (1 - hat-p(r)) / r]^(1/2)}.
+  4. Calculate \eqn{m^{(r)}_{\max}}{m(r)_max} from \eqn{y_{ij}^{(r)}}{y_ij(r)}. If \eqn{m^{(r)}_{\max} > m_{\max}}{m(r)_max > m_max}, then increment the counting variable: \eqn{COUNT = COUNT + 1}{COUNT = COUNT + 1}. Calculate approximate P-value \eqn{\hat{p}^{(r)}=COUNT/r}{hat-p(r) = COUNT / r}, and the simulation standard error \eqn{SE(\hat{p}^{(r)})=\sqrt{\hat{p}^{(r)}(1-\hat{p}^{(r)})/r}}{[hat-p(r) (1 - hat-p(r)) / r]^(1/2)}.
 
   5. Repeat 3--4, while \eqn{r > 1000}{r > 1000} and \eqn{3.5SE(\hat{p}^{(r)}) < \epsilon}{3.5 SE(hat-p(r)) < epsilon} (corresponding to 99\% confidence level), or \eqn{NRESAMPMAX}{NRESAMPMAX} times. Output the approximate P-value \eqn{\hat{p}^{(r)}}{hat-p(r)}.
 

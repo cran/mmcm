@@ -8,7 +8,8 @@
 }
 \usage{
 mcm.mvt(
-  x, g, contrast, alternative = c("two.sided", "less", "greater"), algorithm = GenzBretz()
+  x, g, contrast, alternative = c("two.sided", "less", "greater"),
+  algorithm = GenzBretz()
 )
 }
 %- maybe also 'usage' for other objects documented here.
@@ -47,17 +48,17 @@ mcm.mvt(
   }
   \deqn{
     \bm{D}=diag(n_1,\, n_2,\, \ldots,\, n_i,\, \ldots,\, n_a),~~
-    S^2=\frac{1}{\gamma}\sum_{j=1}^{n_i}\sum_{i=1}^{a} (Y_{ij}-\bar{Y}_i)^2,
+    V=\frac{1}{\gamma}\sum_{j=1}^{n_i}\sum_{i=1}^{a} (Y_{ij}-\bar{Y}_i)^2,
   }{
     D = diag(n_1, n_2, ..., n_i, ..., n_a) (a x a matrix),
-    S^2 = 1/gamma * sum_{j=1}^{n_i} sum_{i=1}^{a} (Y_ij-Ybar_i)^2,
+    V = 1/gamma * sum_{j=1}^{n_i} sum_{i=1}^{a} (Y_ij-Ybar_i)^2,
   }
   \deqn{
     \gamma=\sum_{i=1}^{a} (n_i-1),~~
-    T_{k}=\frac{\bm{c}^t_k \bar{\bm{Y}}}{\sqrt{S^2\bm{c}^t_k \bm{D} \bm{c}_k}},
+    T_{k}=\frac{\bm{c}^t_k \bar{\bm{Y}}}{\sqrt{V\bm{c}^t_k \bm{D} \bm{c}_k}},
   }{
     gamma = sum_{i=1}^{a} (n_i-1),
-    T_k = c_k^t Ybar / (S^2 c_k^t D c_k)^(1/2),
+    T_k = c_k^t Ybar / (V c_k^t D c_k)^(1/2),
   }
   \deqn{
     T_{\max}=\max(T_1,~ T_2,~ \ldots,~ T_k).
@@ -68,11 +69,11 @@ mcm.mvt(
   Consider testing the overall null hypothesis \eqn{H_0: \mu_1=\mu_2=\ldots=\mu_i}, versus alternative hypotheses \eqn{H_1} for response petterns  (\eqn{H_1: \mu_1<\mu_2<\ldots<\mu_i,~ \mu_1=\mu_2<\ldots<\mu_i,~ \mu_1<\mu_2<\ldots=\mu_i}).
   The \eqn{P}-value for the probability distribution of \eqn{T_{\max}}{T_max} under the overall null hypothesis is
   \deqn{
-    P\mbox{-value}=\Pr(T_{\max}>t^{*}_{\max} \mid H_0)
+    P\mbox{-value}=\Pr(T_{\max}>t_{\max} \mid H_0)
   }{
-    P-value = Pr(T_max > t*_max | H0)
+    P-value = Pr(T_max > t_max | H0)
   }
-  \eqn{t^{*}_{\max}}{t*_max} is observed value of statistics.
+  \eqn{t_{\max}}{t_max} is observed value of statistics.
   This function gives distribution of \eqn{T_{\max}}{T_max} by using randomized quasi-Monte Carlo method from package \code{mvtnorm}.
 }
 \value{
