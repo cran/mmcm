@@ -3,20 +3,24 @@ ToDo
 
 Change log
 
+ 2011-09-13: version 1.2-2
+   revised R files for roxygen tags
+   updated reference articles
+
  2011-05-16: version 1.2-1
    bug fix for a multi-core CPU
-   revise help files
+   revised help files
 
  2011-05-16: version 1.2-0
    OpenMP parallelization for "mmcm.resamp" function
-   Support one and two-sided tests
+   Supported one and two-sided tests
 
  2009-12-22: version 1.1-1
    bug fix output inccorect contrast vector in "print.mmcm.res" function
-   add absolute error tolerance option in "mmcm.resamp" function
+   added absolute error tolerance option in "mmcm.resamp" function
 
  2009-12-22: version 1.1-0
-   add "mcm.mvt", "mmcm.mvt" function
+   added "mcm.mvt", "mmcm.mvt" function
    implemented the maximum contrast method
 
  2009-06-12: version 1.0-1
