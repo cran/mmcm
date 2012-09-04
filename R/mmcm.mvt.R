@@ -7,34 +7,34 @@
 #' \code{\link{mmcm.mvt}} performs the modified maximum contrast method
 #' that is detecting a true response pattern under the unequal sample size situation.
 #' 
-#' \eqn{Y_{ij} (i=1,~ 2,~\ldots ;~ j=1,~ 2,~ \ldots,~ n_i)}{Y_ij (i = 1, 2, ...;
-#' j = 1, 2, ..., n_i)} is an observed response for \eqn{j}th individual in
-#' \eqn{i}th group.
+#' \eqn{Y_{ij} (i=1, 2, \ldots; j=1, 2, \ldots, n_i)}{Y_ij (i = 1, 2, ...;
+#' j = 1, 2, ..., n_i)} is an observed response for \eqn{j}-th individual in
+#' \eqn{i}-th group.
 #' 
 #' \eqn{\bm{C}}{C} is coefficient matrix for modified maximum contrast statistics
 #' (\eqn{i \times k}{i x k} matrix, \eqn{i}: No. of groups, \eqn{k}: No. of pattern).
 #' \deqn{
-#'   \bm{C}=(\bm{c}_1~ \bm{c}_2~ \ldots~ \bm{c}_k)^t
+#'   \bm{C}=(\bm{c}_1, \bm{c}_2, \ldots, \bm{c}_k)^{\rm{T}}
 #' }{
-#'   C = (c_1 c_2 ... c_k)^t
+#'   C = (c_1, c_2, ..., c_k)^T
 #' }
 #' \eqn{\bm{c}_k}{c_k} is coefficient vector of \eqn{k}th pattern.
 #' \deqn{
-#'   \bm{c}_k=(c_{k1}~ c_{k2}~ \ldots~ c_{ki})^t \qquad (\textstyle \sum_i c_{ki}=0)
+#'   \bm{c}_k=(c_{k1}, c_{k2}, \ldots, c_{ki})^{\rm{T}} \qquad (\textstyle \sum_i c_{ki}=0)
 #' }{
-#'   c_k = (c_k1 c_k2 ... c_ki)^t (sum from i of c_ki = 0)
+#'   c_k = (c_k1 c_k2 ... c_ki)^T (sum from i of c_ki = 0)
 #' }
 #' 
 #' \eqn{S_{\max}}{S_max} is the modified maximum contrast statistic.
 #' \deqn{
-#'   \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}}, ~~
-#'   \bar{\bm{Y}}=(\bar{Y}_1~ \bar{Y}_2~ \ldots~ \bar{Y}_i \ldots~ \bar{Y}_a)^t,
+#'   \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}},
+#'   \bar{\bm{Y}}=(\bar{Y}_1, \bar{Y}_2, \ldots, \bar{Y}_i, \ldots, \bar{Y}_a)^{\rm{T}},
 #' }{
 #'   Ybar_i = (sum from j of Y_ij) / n_i,
-#'   Ybar = (Ybar_1 Ybar_2 ... Ybar_i ... Ybar_a)^t (a x 1 vector),
+#'   Ybar = (Ybar_1, Ybar_2, ..., Ybar_i, ..., Ybar_a)^T (a x 1 vector),
 #' }
 #' \deqn{
-#'   V=\frac{1}{\gamma}\sum_{j=1}^{n_i}\sum_{i=1}^{a} (Y_{ij}-\bar{Y}_i)^2,~~
+#'   V=\frac{1}{\gamma}\sum_{j=1}^{n_i}\sum_{i=1}^{a} (Y_{ij}-\bar{Y}_i)^2,
 #'   \gamma=\sum_{i=1}^{a} (n_i-1),
 #' }{
 #'   V = 1/gamma * sum_{j=1}^{n_i} sum_{i=1}^{a} (Y_ij-Ybar_i)^2,
@@ -46,7 +46,7 @@
 #'   S_k = c_k^t Ybar / (V c_k^t c_k)^(1/2),
 #' }
 #' \deqn{
-#'   S_{\max}=\max(S_1,~ S_2,~ \ldots,~ S_k).
+#'   S_{\max}=\max(S_1, S_2, \ldots, S_k).
 #' }{
 #'   S_max = max(S_1, S_2, ..., S_k).
 #' }

@@ -2,9 +2,9 @@
 \alias{mmcm.resamp}
 \title{The permuted modified maximum contrast method}
 \usage{
-  mmcm.resamp(x, g, contrast, alternative = c("two.sided",
-  "less", "greater"), nsample = 20000, abseps = 0.001, seed
-  = NULL)
+  mmcm.resamp(x, g, contrast,
+    alternative = c("two.sided", "less", "greater"),
+    nsample = 20000, abseps = 0.001, seed = NULL)
 }
 \arguments{
   \item{x}{a numeric vector of data values}
@@ -51,36 +51,36 @@
   maximum contrast method that is detecting a true response
   pattern under the unequal sample size situation.
 
-  \eqn{Y_{ij} (i=1,~ 2,~\ldots ;~ j=1,~ 2,~ \ldots,~
-  n_i)}{Y_ij (i = 1, 2, ...; j = 1, 2, ..., n_i)} is an
-  observed response for \eqn{j}th individual in \eqn{i}th
-  group.
+  \eqn{Y_{ij} (i=1, 2, \ldots; j=1, 2, \ldots, n_i)}{Y_ij
+  (i = 1, 2, ...; j = 1, 2, ..., n_i)} is an observed
+  response for \eqn{j}-th individual in \eqn{i}-th group.
 
   \eqn{\bm{C}}{C} is coefficient matrix for permuted
   modified maximum contrast statistics (\eqn{i \times k}{i
   x k} matrix, \eqn{i}: No. of groups, \eqn{k}: No. of
-  pattern). \deqn{ \bm{C}=(\bm{c}_1~ \bm{c}_2~ \ldots~
-  \bm{c}_k)^t }{ C = (c_1 c_2 ... c_k)^t }
-  \eqn{\bm{c}_k}{c_k} is coefficient vector of \eqn{k}th
-  pattern. \deqn{ \bm{c}_k=(c_{k1}~ c_{k2}~ \ldots~
-  c_{ki})^t \qquad (\textstyle \sum_i c_{ki}=0) }{ c_k =
-  (c_k1 c_k2 ... c_ki)^t (sum from i of c_ki = 0) }
+  pattern). \deqn{ \bm{C}=(\bm{c}_1, \bm{c}_2, \ldots,
+  \bm{c}_k)^{\rm{T}} }{ C = (c_1, c_2, ..., c_k)^T }
+  \eqn{\bm{c}_k}{c_k} is coefficient vector of \eqn{k}-th
+  pattern. \deqn{ \bm{c}_k=(c_{k1}, c_{k2}, \ldots,
+  c_{ki})^{\rm{T}} \qquad (\textstyle \sum_i c_{ki}=0) }{
+  c_k = (c_k1, c_k2, ..., c_ki)^T (sum from i of c_ki = 0)
+  }
 
   \eqn{M_{\max}}{M_max} is a permuted modified maximum
   contrast statistic. \deqn{
-  \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}}, ~~
-  \bar{\bm{Y}}=(\bar{Y}_1~ \bar{Y}_2~ \ldots~ \bar{Y}_i
-  \ldots~ \bar{Y}_a)^t, M_{k}=\frac{\bm{c}^t_k
+  \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}},
+  \bar{\bm{Y}}=(\bar{Y}_1, \bar{Y}_2, \ldots, \bar{Y}_i,
+  \ldots, \bar{Y}_a)^{\rm{T}}, M_{k}=\frac{\bm{c}^t_k
   \bar{\bm{Y}}}{\sqrt{\bm{c}^t_k \bm{c}_k}}, }{ Ybar_i =
-  (sum from j of Y_ij) / n_i, Ybar = (Ybar_1 Ybar_2 ...
-  Ybar_i ... Ybar_a)^t (a x 1 vector), M_k = c_k^t Ybar /
-  (c_k^t c_k)^(1/2), } \deqn{ M_{\max}=\max(M_1,~ M_2,~
-  \ldots,~ M_k). }{ M_max = max(M_1, M_2, ..., M_k). }
+  (sum from j of Y_ij) / n_i, Ybar = (Ybar_1, Ybar_2, ...,
+  Ybar_i, ..., Ybar_a)^T (a x 1 vector), M_k = c_k^t Ybar /
+  (c_k^t c_k)^(1/2), } \deqn{ M_{\max}=\max(M_1, M_2,
+  \ldots, M_k). }{ M_max = max(M_1, M_2, ..., M_k). }
 
   Consider testing the overall null hypothesis \eqn{H_0:
   \mu_1=\mu_2=\ldots=\mu_i}, versus alternative hypotheses
   \eqn{H_1} for response petterns (\eqn{H_1:
-  \mu_1<\mu_2<\ldots<\mu_i,~ \mu_1=\mu_2<\ldots<\mu_i,~
+  \mu_1<\mu_2<\ldots<\mu_i, \mu_1=\mu_2<\ldots<\mu_i,
   \mu_1<\mu_2<\ldots=\mu_i}). The \eqn{P}-value for the
   probability distribution of \eqn{M_{\max}}{M_max} under
   the overall null hypothesis is \deqn{
@@ -126,22 +126,22 @@
 #  true response pattern: dominant model c=(1, 1, -2)
 set.seed(136885)
 x <- c(
-rnorm(130, mean =  1 / 6, sd = 1),
-rnorm( 90, mean =  1 / 6, sd = 1),
-rnorm( 10, mean = -2 / 6, sd = 1)
+  rnorm(130, mean =  1 / 6, sd = 1),
+  rnorm( 90, mean =  1 / 6, sd = 1),
+  rnorm( 10, mean = -2 / 6, sd = 1)
 )
 g <- rep(1:3, c(130, 90, 10))
 boxplot(
-x ~ g,
-width = c(length(g[g==1]), length(g[g==2]), length(g[g==3])),
-main  = "Dominant model (sample data)",
-xlab  = "Genotype", ylab="PK parameter"
+  x ~ g,
+  width = c(length(g[g==1]), length(g[g==2]), length(g[g==3])),
+  main  = "Dominant model (sample data)",
+  xlab  = "Genotype", ylab="PK parameter"
 )
 
 # coefficient matrix
 # c_1: additive, c_2: recessive, c_3: dominant
 contrast <- rbind(
-c(-1, 0, 1), c(-2, 1, 1), c(-1, -1, 2)
+  c(-1, 0, 1), c(-2, 1, 1), c(-1, -1, 2)
 )
 y <- mmcm.resamp(x, g, contrast, nsample = 20000, abseps = 0.01, seed = 5784324)
 y
@@ -153,15 +153,15 @@ y
 #                               3 recessive model c=( 2, -1, -1)
 set.seed(3872435)
 x <- c(
-rnorm(130, mean =  1 / 6, sd = 1),
-rnorm( 90, mean =  1 / 6, sd = 1),
-rnorm( 10, mean = -2 / 6, sd = 1),
-rnorm(130, mean = -1 / 4, sd = 1),
-rnorm( 90, mean =  0 / 4, sd = 1),
-rnorm( 10, mean =  1 / 4, sd = 1),
-rnorm(130, mean =  2 / 6, sd = 1),
-rnorm( 90, mean = -1 / 6, sd = 1),
-rnorm( 10, mean = -1 / 6, sd = 1)
+  rnorm(130, mean =  1 / 6, sd = 1),
+  rnorm( 90, mean =  1 / 6, sd = 1),
+  rnorm( 10, mean = -2 / 6, sd = 1),
+  rnorm(130, mean = -1 / 4, sd = 1),
+  rnorm( 90, mean =  0 / 4, sd = 1),
+  rnorm( 10, mean =  1 / 4, sd = 1),
+  rnorm(130, mean =  2 / 6, sd = 1),
+  rnorm( 90, mean = -1 / 6, sd = 1),
+  rnorm( 10, mean = -1 / 6, sd = 1)
 )
 g   <- rep(rep(1:3, c(130, 90, 10)), 3)
 pos <- rep(c("rsXXXX", "rsYYYY", "rsZZZZ"), each=230)
@@ -170,21 +170,21 @@ xx  <- data.frame(pos = pos, x = x, g = g)
 # coefficient matrix
 # c_1: additive, c_2: recessive, c_3: dominant
 contrast <- rbind(
-c(-1, 0, 1), c(-2, 1, 1), c(-1, -1, 2)
+  c(-1, 0, 1), c(-2, 1, 1), c(-1, -1, 2)
 )
 
 mmcmtapply <- function(r) {
-mmcm.resamp(
-xx$x[xx$pos==r[1]], xx$g[xx$pos==r[1]],
-contrast, nsample = 10000, abseps = 0.01, seed = 5784324+as.numeric(r[1])
-)
+  mmcm.resamp(
+    xx$x[xx$pos==r[1]], xx$g[xx$pos==r[1]],
+    contrast, nsample = 10000, abseps = 0.01, seed = 5784324+as.numeric(r[1])
+  )
 }
 y <- tapply(xx$pos, xx$pos, mmcmtapply)
 yy <- data.frame(
-Pos      = as.vector(names(y)),
-Pval     = as.vector(sapply(y, "[[", 3)),
-Pattern  = as.vector(sapply(y, "[[", 7)),
-MC_Error = as.vector(sapply(y, "[[", 9))
+  Pos      = as.vector(names(y)),
+  Pval     = as.vector(sapply(y, "[[", 3)),
+  Pattern  = as.vector(sapply(y, "[[", 7)),
+  MC_Error = as.vector(sapply(y, "[[", 9))
 )
 yy
 }

@@ -613,8 +613,7 @@ struct mmcmdat *my_malloc_mmcmdat1(int m) {
 
   struct mmcmdat *p;
   if ((p = (struct mmcmdat *) R_alloc(m, sizeof(struct mmcmdat))) == NULL) {
-    REprintf("Error: my_malloc_mmcmdat1: failed to allocate size %d mmcmdat array\n", m);
-    exit(EXIT_FAILURE);
+    error("Error: my_malloc_mmcmdat1: failed to allocate size %d mmcmdat array\n", m);
   }
   return p;
 
@@ -629,13 +628,11 @@ struct mmcmdat **my_malloc_mmcmdat2(int m, int n) {
   struct mmcmdat **p;
 
   if ((p = (struct mmcmdat **) R_alloc(m, sizeof(struct mmcmdat *))) == NULL) {
-    REprintf("Error: my_malloc_mmcmdat2: failed to allocate size %d mmcmdat * array\n", m);
-    exit(EXIT_FAILURE);
+    error("Error: my_malloc_mmcmdat2: failed to allocate size %d mmcmdat * array\n", m);
   }
 	for (int i = 0; i < m; i++) {
     if ((p[i] = (struct mmcmdat *) R_alloc(n, sizeof(struct mmcmdat))) == NULL) {
-      REprintf("Error: my_malloc_mmcmdat2: failed to allocate size %d mmcmdat array\n", n);
-      exit(EXIT_FAILURE);
+      error("Error: my_malloc_mmcmdat2: failed to allocate size %d mmcmdat array\n", n);
     }
 	}
   return p;
@@ -650,8 +647,7 @@ long *my_malloc_long1(int m) {
 
   long *p;
   if ((p = (long *) R_alloc(m, sizeof(long))) == NULL) {
-    REprintf("Error: my_malloc_long1: failed to allocate size %d long array\n", m);
-    exit(EXIT_FAILURE);
+    error("Error: my_malloc_long1: failed to allocate size %d long array\n", m);
   }
   return p;
 
@@ -665,8 +661,7 @@ double *my_malloc_double1(int m) {
 
   double *p;
   if ((p = (double *) R_alloc(m, sizeof(double))) == NULL) {
-    REprintf("Error: my_malloc_double1: failed to allocate size %d double array\n", m);
-    exit(EXIT_FAILURE);
+    error("Error: my_malloc_double1: failed to allocate size %d double array\n", m);
   }
   return p;
 
@@ -681,13 +676,11 @@ double **my_malloc_double2(int m, int n) {
   double **p;
 
   if ((p = (double **) R_alloc(m, sizeof(double *))) == NULL) {
-    REprintf("Error: my_malloc_double2: failed to allocate size %d double * array\n", m);
-    exit(EXIT_FAILURE);
+    error("Error: my_malloc_double2: failed to allocate size %d double * array\n", m);
   }
 	for (int i = 0; i < m; i++) {
     if ((p[i] = (double *) R_alloc(n, sizeof(double))) == NULL) {
-      REprintf("Error: my_malloc_double2: failed to allocate size %d double array\n", n);
-      exit(EXIT_FAILURE);
+      error("Error: my_malloc_double2: failed to allocate size %d double array\n", n);
     }
 	}
   return p;

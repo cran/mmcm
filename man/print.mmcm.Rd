@@ -3,7 +3,7 @@
 \title{Print function for mmcm object}
 \usage{
   \method{print}{mmcm} (x, digits = getOption("digits"),
-  ...)
+    ...)
 }
 \arguments{
   \item{x}{Object of class \code{mmcm}, which is result of
