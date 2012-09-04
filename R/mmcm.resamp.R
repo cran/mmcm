@@ -7,44 +7,44 @@
 #' method that is detecting a true response pattern under the unequal sample size
 #' situation.
 #' 
-#' \eqn{Y_{ij} (i=1,~ 2,~\ldots ;~ j=1,~ 2,~ \ldots,~ n_i)}{Y_ij (i = 1, 2, ...;
-#' j = 1, 2, ..., n_i)} is an observed response for \eqn{j}th individual in
-#' \eqn{i}th group.
+#' \eqn{Y_{ij} (i=1, 2, \ldots; j=1, 2, \ldots, n_i)}{Y_ij (i = 1, 2, ...;
+#' j = 1, 2, ..., n_i)} is an observed response for \eqn{j}-th individual in
+#' \eqn{i}-th group.
 #' 
 #' \eqn{\bm{C}}{C} is coefficient matrix for permuted modified maximum contrast
 #' statistics (\eqn{i \times k}{i x k} matrix, \eqn{i}: No. of groups, \eqn{k}:
 #' No. of pattern).
 #' \deqn{
-#'   \bm{C}=(\bm{c}_1~ \bm{c}_2~ \ldots~ \bm{c}_k)^t
+#'   \bm{C}=(\bm{c}_1, \bm{c}_2, \ldots, \bm{c}_k)^{\rm{T}}
 #' }{
-#'   C = (c_1 c_2 ... c_k)^t
+#'   C = (c_1, c_2, ..., c_k)^T
 #' }
-#' \eqn{\bm{c}_k}{c_k} is coefficient vector of \eqn{k}th pattern.
+#' \eqn{\bm{c}_k}{c_k} is coefficient vector of \eqn{k}-th pattern.
 #' \deqn{
-#'   \bm{c}_k=(c_{k1}~ c_{k2}~ \ldots~ c_{ki})^t \qquad (\textstyle \sum_i c_{ki}=0)
+#'   \bm{c}_k=(c_{k1}, c_{k2}, \ldots, c_{ki})^{\rm{T}} \qquad (\textstyle \sum_i c_{ki}=0)
 #' }{
-#'   c_k = (c_k1 c_k2 ... c_ki)^t (sum from i of c_ki = 0)
+#'   c_k = (c_k1, c_k2, ..., c_ki)^T (sum from i of c_ki = 0)
 #' }
 #' 
 #' \eqn{M_{\max}}{M_max} is a permuted modified maximum contrast statistic.
 #' \deqn{
-#'   \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}}, ~~
-#'   \bar{\bm{Y}}=(\bar{Y}_1~ \bar{Y}_2~ \ldots~ \bar{Y}_i \ldots~ \bar{Y}_a)^t,
+#'   \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}},
+#'   \bar{\bm{Y}}=(\bar{Y}_1, \bar{Y}_2, \ldots, \bar{Y}_i, \ldots, \bar{Y}_a)^{\rm{T}},
 #'   M_{k}=\frac{\bm{c}^t_k \bar{\bm{Y}}}{\sqrt{\bm{c}^t_k \bm{c}_k}},
 #' }{
 #'   Ybar_i = (sum from j of Y_ij) / n_i,
-#'   Ybar = (Ybar_1 Ybar_2 ... Ybar_i ... Ybar_a)^t (a x 1 vector),
+#'   Ybar = (Ybar_1, Ybar_2, ..., Ybar_i, ..., Ybar_a)^T (a x 1 vector),
 #'   M_k = c_k^t Ybar / (c_k^t c_k)^(1/2),
 #' }
 #' \deqn{
-#'   M_{\max}=\max(M_1,~ M_2,~ \ldots,~ M_k).
+#'   M_{\max}=\max(M_1, M_2, \ldots, M_k).
 #' }{
 #'   M_max = max(M_1, M_2, ..., M_k).
 #' }
 #' 
 #' Consider testing the overall null hypothesis \eqn{H_0: \mu_1=\mu_2=\ldots=\mu_i},
 #' versus alternative hypotheses \eqn{H_1} for response petterns 
-#' (\eqn{H_1: \mu_1<\mu_2<\ldots<\mu_i,~ \mu_1=\mu_2<\ldots<\mu_i,~
+#' (\eqn{H_1: \mu_1<\mu_2<\ldots<\mu_i, \mu_1=\mu_2<\ldots<\mu_i,
 #' \mu_1<\mu_2<\ldots=\mu_i}).
 #' The \eqn{P}-value for the probability distribution of \eqn{M_{\max}}{M_max}
 #' under the overall null hypothesis is

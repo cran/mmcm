@@ -1,30 +1,67 @@
+----------------------------------------------------------------
+NEWS file for the mmcm package
+----------------------------------------------------------------
 
-ToDo
+----------------------------------------------------------------
 
-Change log
+Changes in version 1.2-3 (2012-09-03)
 
- 2011-09-13: version 1.2-2
-   revised R files for roxygen tags
-   updated reference articles
+ o Deleted exit() functions and added error() functions in
+   "mmcm.resamp.c"
 
- 2011-05-16: version 1.2-1
-   bug fix for a multi-core CPU
-   revised help files
 
- 2011-05-16: version 1.2-0
-   OpenMP parallelization for "mmcm.resamp" function
-   Supported one and two-sided tests
+----------------------------------------------------------------
 
- 2009-12-22: version 1.1-1
-   bug fix output inccorect contrast vector in "print.mmcm.res" function
-   added absolute error tolerance option in "mmcm.resamp" function
+Changes in version 1.2-2 (2011-09-13)
 
- 2009-12-22: version 1.1-0
-   added "mcm.mvt", "mmcm.mvt" function
-   implemented the maximum contrast method
+ o Revised R files for roxygen tags
+ o Updated reference articles
 
- 2009-06-12: version 1.0-1
-   bug fix for 64-bit OS
 
- 2009-01-22: version 1.0-0
-   released
+----------------------------------------------------------------
+
+Changes in version 1.2-1 (2011-05-16)
+
+ o Fixed bugs for a multi-core CPUs related issue
+ o Revised help files
+
+
+----------------------------------------------------------------
+
+Changes in version 1.2-0 (2011-05-16)
+
+ o Implemented OpenMP parallelization for "mmcm.resamp" function
+ o Supported one and two-sided tests
+
+
+----------------------------------------------------------------
+
+Changes in version 1.1-1 (2009-12-22)
+
+ o Fixed a bug: inccorect contrast vector was outputed in
+   "print.mmcm.res" function
+ o Added absolute error tolerance option in "mmcm.resamp"
+   function
+
+
+----------------------------------------------------------------
+
+Changes in version 1.1-0 (2009-12-22)
+
+ o Added "mcm.mvt", "mmcm.mvt" function
+ o Implemented the maximum contrast method
+
+
+----------------------------------------------------------------
+
+Changes in version 1.0-1 (2009-06-12)
+
+ o Fixed a bug of a 64-bit OS related issue
+
+
+----------------------------------------------------------------
+
+Changes in version 1.0-0 (2009-01-22)
+
+ o Released.
+

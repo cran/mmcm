@@ -7,48 +7,48 @@
 #' \code{\link{mcm.mvt}} performs the maximum contrast method that is detecting
 #' a true response pattern.
 #' 
-#' \eqn{Y_{ij} (i=1,~ 2,~\ldots ;~ j=1,~ 2,~ \ldots,~ n_i)}{Y_ij (i = 1, 2, ...;
-#' j = 1, 2, ..., n_i)} is an observed response for \eqn{j}th individual in
-#' \eqn{i}th group.
+#' \eqn{Y_{ij} (i=1, 2, \ldots; j=1, 2, \ldots, n_i)}{Y_ij (i = 1, 2, ...;
+#' j = 1, 2, ..., n_i)} is an observed response for \eqn{j}-th individual in
+#' \eqn{i}-th group.
 #' 
 #' \eqn{\bm{C}}{C} is coefficient matrix for the maximum contrast statistics
 #' (\eqn{i \times k}{i x k} matrix, \eqn{i}: No. of groups, \eqn{k}: No. of pattern).
 #' \deqn{
-#'   \bm{C}=(\bm{c}_1~ \bm{c}_2~ \ldots~ \bm{c}_k)^t
+#'   \bm{C}=(\bm{c}_1, \bm{c}_2, \ldots, \bm{c}_k)^{\rm{T}}
 #' }{
-#'   C = (c_1 c_2 ... c_k)^t
+#'   C = (c_1, c_2, ..., c_k)^T
 #' }
 #' \eqn{\bm{c}_k}{c_k} is coefficient vector of \eqn{k}th pattern.
 #' \deqn{
-#'   \bm{c}_k=(c_{k1}~ c_{k2}~ \ldots~ c_{ki})^t \qquad (\textstyle \sum_i c_{ki}=0)
+#'   \bm{c}_k=(c_{k1}, c_{k2}, \ldots, c_{ki})^{\rm{T}} \qquad (\textstyle \sum_i c_{ki}=0)
 #' }{
-#'   c_k = (c_k1 c_k2 ... c_ki)^t (sum from i of c_ki = 0)
+#'   c_k = (c_k1, c_k2, ..., c_ki)^{\rm{T}} (sum from i of c_ki = 0)
 #' }
 #' 
 #' \eqn{T_{\max}}{T_max} is the maximum contrast statistic.
 #' \deqn{
-#'   \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}}, ~~
-#'   \bar{\bm{Y}}=(\bar{Y}_1~ \bar{Y}_2~ \ldots~ \bar{Y}_i \ldots~ \bar{Y}_a)^t,
+#'   \bar{Y}_i=\frac{\sum_{j=1}^{n_i} Y_{ij}}{n_{i}},
+#'   \bar{\bm{Y}}=(\bar{Y}_1, \bar{Y}_2, \ldots, \bar{Y}_i, \ldots, \bar{Y}_a)^{\rm{T}},
 #' }{
 #'   Ybar_i = (sum from j of Y_ij) / n_i,
-#'   Ybar = (Ybar_1 Ybar_2 ... Ybar_i ... Ybar_a)^t (a x 1 vector),
+#'   Ybar = (Ybar_1 Ybar_2 ... Ybar_i ... Ybar_a)^T (a x 1 vector),
 #' }
 #' \deqn{
-#'   \bm{D}=diag(n_1,\, n_2,\, \ldots,\, n_i,\, \ldots,\, n_a),~~
+#'   \bm{D}=diag(n_1, n_2, \ldots, n_i, \ldots, n_a),
 #'   V=\frac{1}{\gamma}\sum_{j=1}^{n_i}\sum_{i=1}^{a} (Y_{ij}-\bar{Y}_i)^2,
 #' }{
 #'   D = diag(n_1, n_2, ..., n_i, ..., n_a) (a x a matrix),
 #'   V = 1/gamma * sum_{j=1}^{n_i} sum_{i=1}^{a} (Y_ij-Ybar_i)^2,
 #' }
 #' \deqn{
-#'   \gamma=\sum_{i=1}^{a} (n_i-1),~~
+#'   \gamma=\sum_{i=1}^{a} (n_i-1),
 #'   T_{k}=\frac{\bm{c}^t_k \bar{\bm{Y}}}{\sqrt{V\bm{c}^t_k \bm{D} \bm{c}_k}},
 #' }{
 #'   gamma = sum_{i=1}^{a} (n_i-1),
 #'   T_k = c_k^t Ybar / (V c_k^t D c_k)^(1/2),
 #' }
 #' \deqn{
-#'   T_{\max}=\max(T_1,~ T_2,~ \ldots,~ T_k).
+#'   T_{\max}=\max(T_1, T_2, \ldots, T_k).
 #' }{
 #'   T_max = max(T_1, T_2, ..., T_k).
 #' }
