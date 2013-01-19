@@ -4,6 +4,13 @@ NEWS file for the mmcm package
 
 ----------------------------------------------------------------
 
+Changes in version 1.2-4 (2013-01-20)
+
+ o Replace .First.lib() to a useDynLib directive in the
+   NAMESPACE
+
+----------------------------------------------------------------
+
 Changes in version 1.2-3 (2012-09-03)
 
  o Deleted exit() functions and added error() functions in
