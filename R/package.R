@@ -29,5 +29,6 @@
 #' \code{\link{mcm.mvt}},
 #' \code{\link{mmcm.mvt}},
 #' \code{\link{mmcm.resamp}}
+#' @useDynLib mmcm
 #' @keywords htest
 NULL
