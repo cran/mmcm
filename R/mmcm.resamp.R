@@ -186,9 +186,8 @@
 #' yy
 #' @keywords htest
 #' @export
-`mmcm.resamp` <-
-function(x, g, contrast, alternative = c("two.sided", "less", "greater"),
-  nsample=20000, abseps=0.001, seed=NULL) {
+mmcm.resamp <- function(x, g, contrast, alternative = c("two.sided", "less", "greater"),
+  nsample = 20000, abseps = 0.001, seed = NULL) {
   
   ####################
   # executable check

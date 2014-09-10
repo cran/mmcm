@@ -164,9 +164,7 @@
 #' yy
 #' @keywords htest
 #' @export
-`mcm.mvt` <-
-function(x, g, contrast, alternative = c("two.sided", "less", "greater"),
-  algorithm = GenzBretz()) {
+mcm.mvt <- function(x, g, contrast, alternative = c("two.sided", "less", "greater"), algorithm = GenzBretz()) {
   
   ####################
   # executable check

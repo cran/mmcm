@@ -168,8 +168,7 @@
 #' yy
 #' @keywords htest
 #' @export
-`mmcm.mvt` <-
-function(x, g, contrast, alternative = c("two.sided", "less", "greater"),
+mmcm.mvt <- function(x, g, contrast, alternative = c("two.sided", "less", "greater"),
   algorithm = GenzBretz()) {
   
   ####################

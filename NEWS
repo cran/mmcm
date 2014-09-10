@@ -4,6 +4,12 @@ NEWS file for the mmcm package
 
 ----------------------------------------------------------------
 
+Changes in version 1.2-5 (2014-09-10)
+
+ o Updated according to the CRAN policies 
+
+----------------------------------------------------------------
+
 Changes in version 1.2-4 (2013-01-20)
 
  o Replace .First.lib() to a useDynLib directive in the

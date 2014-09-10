@@ -14,9 +14,8 @@
 #' \code{\link{mmcm.resamp}},
 #' \code{\link{mcm.mvt}}
 #' @keywords print
-#' @S3method print mmcm
-`print.mmcm` <-
-function(x, digits = getOption("digits"), ...) {
+#' @export
+print.mmcm <- function(x, digits = getOption("digits"), ...) {
 
   ####################
   # print result
