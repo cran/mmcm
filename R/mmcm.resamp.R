@@ -185,6 +185,7 @@
 #' )
 #' yy
 #' @keywords htest
+#' @importFrom stats var
 #' @export
 mmcm.resamp <- function(x, g, contrast, alternative = c("two.sided", "less", "greater"),
   nsample = 20000, abseps = 0.001, seed = NULL) {
@@ -247,7 +248,7 @@ mmcm.resamp <- function(x, g, contrast, alternative = c("two.sided", "less", "gr
   CDC        <- contrast %*% D %*% t(contrast)
   
   CtC        <- contrast %*% t(contrast)
-  CtCMATRIX  <- matrix(rep(1, m * m), ncol=m) * diag(CtC)
+  CtCMATRIX  <- matrix(rep(1, m * m), ncol = m) * diag(CtC)
   Rs         <- CDC / (sqrt(CtCMATRIX) * sqrt(t(CtCMATRIX)))
   
   STATISTICS <- switch(
@@ -299,15 +300,15 @@ mmcm.resamp <- function(x, g, contrast, alternative = c("two.sided", "less", "gr
   ERROR <- RESAMP$error
   MSG   <- msg
   
-  if (length((1:m)[STATISTICS==STATISTIC]) != 1) {
+  if (length((1:m)[STATISTICS == STATISTIC]) != 1) {
     MAXCONT <- warning("More than 2 contrast coefficient vectors were selected")
   } else {
     MAXCONT <- "("
     for(i in 1:p) {
-      if (i==p) {
-        MAXCONT <- paste(MAXCONT, NMAXCONT[i], ")", sep="")
+      if (i == p) {
+        MAXCONT <- paste(MAXCONT, NMAXCONT[i], ")", sep = "")
       } else {
-        MAXCONT <- paste(MAXCONT, NMAXCONT[i], ", ", sep="")
+        MAXCONT <- paste(MAXCONT, NMAXCONT[i], ", ", sep = "")
       }
     }
   }
@@ -328,7 +329,8 @@ mmcm.resamp <- function(x, g, contrast, alternative = c("two.sided", "less", "gr
     contrast       = MAXCONT,
     contrast.index = IMAXCONT,
     error          = ERROR,
-    msg            = MSG),
+    msg            = MSG
+    ),
     class          = "mmcm"
   )
   return(RVAL)
